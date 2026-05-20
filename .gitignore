@@ -1,0 +1,24 @@
+# Raw data — too large for GitHub (379MB). Download from:
+# https://www.kaggle.com/datasets/mczielinski/bitcoin-historical-data
+data/btcusd_1-min_data.csv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
