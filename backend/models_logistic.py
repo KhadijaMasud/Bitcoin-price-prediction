@@ -1,18 +1,3 @@
-"""
-models_logistic.py
-==================
-Phase 4: Logistic Regression for BTC next-day direction classification.
-
-TARGET: y_cls = 1 if next-day log return > 0 else 0
-
-HOW THE PIPELINE WORKS:
-  StandardScaler -> LogisticRegression (L2 regularised)
-
-  The scaler is fit only on training data to prevent leakage.
-  C (inverse regularisation) is tuned via TimeSeriesSplit GridSearchCV.
-  A dummy baseline (always predict the majority class) is established first.
-"""
-
 import sys
 import os
 import numpy as np
@@ -33,18 +18,6 @@ from features import build_features, get_train_test_split, get_tscv
 def evaluate_classifier(model_name: str,
                          y_true: pd.Series,
                          y_pred: np.ndarray) -> dict:
-    """
-    Computes all classification metrics.
-
-    Accuracy  : (TP+TN) / total — overall correctness
-    Precision : TP / (TP+FP)   — of predicted UPs, how many were right
-    Recall    : TP / (TP+FN)   — of actual UPs, how many did we catch
-    F1        : harmonic mean of Precision and Recall
-                useful when classes are imbalanced (here they're ~52/48,
-                so F1 and Accuracy tell similar stories)
-
-    Course link: Module 7 classification metrics (Weeks 9-10).
-    """
     return {
         'model'    : model_name,
         'Accuracy' : accuracy_score(y_true, y_pred),
@@ -56,20 +29,6 @@ def evaluate_classifier(model_name: str,
 
 def majority_class_baseline(y_cls_train: pd.Series,
                              y_cls_test: pd.Series) -> dict:
-    """
-    Dummy classifier: always predicts the majority class seen in training.
-
-    HOW:
-      Count up-days vs down-days in training set.
-      Whatever is more frequent becomes the prediction for every test day.
-      This is the classification equivalent of the persistence baseline.
-      Any real classifier must beat this to prove it learned something.
-
-    If training set has 52% up-days, majority class = 1 (up).
-    Accuracy of this dummy = 52% — our floor.
-
-    Course link: establishes reference before applying Week 9-10 models.
-    """
     majority = int(y_cls_train.mode()[0])
     y_pred   = np.full(len(y_cls_test), majority)
     result   = evaluate_classifier('Majority Baseline', y_cls_test, y_pred)
@@ -80,17 +39,6 @@ def majority_class_baseline(y_cls_train: pd.Series,
 def print_confusion_matrix(y_true: pd.Series,
                             y_pred: np.ndarray,
                             model_name: str) -> None:
-    """
-    Prints a labelled confusion matrix.
-
-    HOW TO READ IT:
-      Each row = actual class, each column = predicted class.
-      Diagonal = correct predictions (TN top-left, TP bottom-right).
-      Off-diagonal = errors (FP top-right, FN bottom-left).
-
-      High FP = model over-predicts UP days (dangerous in trading: buy signal on a down day)
-      High FN = model misses real UP days (missed profit opportunity)
-    """
     cm = confusion_matrix(y_true, y_pred)
     tn, fp, fn, tp = cm.ravel()
 

@@ -143,7 +143,6 @@ def print_lasso_selection(pipe, feature_names):
       weights are exactly 0. Features with zero weights are deemed non-predictive.
       This is automatic feature selection — no manual threshold needed.
 
-    Course link: Week 5 (Lasso, L1 regularisation).
     """
     coef = pipe.named_steps['model'].coef_
     kept     = [(f, c) for f, c in zip(feature_names, coef) if c != 0]

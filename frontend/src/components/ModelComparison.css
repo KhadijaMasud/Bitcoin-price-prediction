@@ -1,0 +1,77 @@
+.model-card { padding: 20px 22px; }
+
+.model-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.model-row {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  transition: border-color 0.15s;
+}
+.model-row:hover { border-color: var(--border-light); }
+.model-row.best  {
+  border-color: rgba(16,185,129,0.4);
+  background: rgba(16,185,129,0.04);
+}
+
+.model-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.model-row-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.best-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  letter-spacing: 0.06em;
+}
+
+.model-row-val {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.model-bar-bg {
+  height: 5px;
+  background: var(--bg-base);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.model-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(.2,.8,.2,1);
+}
+
+.model-sub-metrics {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+.model-sub-metrics span {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
